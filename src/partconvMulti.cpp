@@ -519,7 +519,7 @@ int PartConvMulti::setup( const char* config_file_name, int max_threads_per_leve
 #if !defined(__APPLE__) && (defined (PIN_BY_INSTANCE) || defined (PIN_BY_LEVEL))
     // allocate cpuset for pthread_setaffinity_np() below
     cpu_set_t cpuset;
-    const unsigned num_cpus = get_nprocs(); //sys/sysinfo.h
+	const unsigned num_cpus = 4;//get_nprocs(); //sys/sysinfo.h
     if (CPU_SETSIZE(cpuset) < num_cpus)
     {
         fprintf(stderr, "CpuSet error: must dynamically allocate a bigger cpuset\n");

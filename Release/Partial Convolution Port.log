@@ -1,0 +1,17 @@
+﻿LINK : warning LNK4075: ignoring '/INCREMENTAL' due to '/OPT:ICF' specification
+pcRTMax.obj : error LNK2019: unresolved external symbol _Pa_GetErrorText referenced in function "void * __cdecl setupAudioStream(class PartConvMax *)" (?setupAudioStream@@YAPAXPAVPartConvMax@@@Z)
+pcRTMax.obj : error LNK2019: unresolved external symbol _Pa_Initialize referenced in function "void * __cdecl setupAudioStream(class PartConvMax *)" (?setupAudioStream@@YAPAXPAVPartConvMax@@@Z)
+pcRTMax.obj : error LNK2019: unresolved external symbol _Pa_Terminate referenced in function "void * __cdecl setupAudioStream(class PartConvMax *)" (?setupAudioStream@@YAPAXPAVPartConvMax@@@Z)
+pcRTMax.obj : error LNK2019: unresolved external symbol _Pa_GetDeviceInfo referenced in function "void * __cdecl setupAudioStream(class PartConvMax *)" (?setupAudioStream@@YAPAXPAVPartConvMax@@@Z)
+pcRTMax.obj : error LNK2019: unresolved external symbol _Pa_OpenStream referenced in function "void * __cdecl setupAudioStream(class PartConvMax *)" (?setupAudioStream@@YAPAXPAVPartConvMax@@@Z)
+pcRTMax.obj : error LNK2019: unresolved external symbol _Pa_CloseStream referenced in function _main
+pcRTMax.obj : error LNK2019: unresolved external symbol _Pa_StartStream referenced in function _main
+pcRTMax.obj : error LNK2019: unresolved external symbol _Pa_StopStream referenced in function _main
+pcRTMax.obj : error LNK2019: unresolved external symbol _Pa_GetStreamInfo referenced in function "void * __cdecl setupAudioStream(class PartConvMax *)" (?setupAudioStream@@YAPAXPAVPartConvMax@@@Z)
+pcRTMax.obj : error LNK2019: unresolved external symbol "public: int __thiscall PartConvMax::setup(int,int,int,int,float *,int,int,int *,int,int,char const *,int,int)" (?setup@PartConvMax@@QAEHHHHHPAMHHPAHHHPBDHH@Z) referenced in function _main
+pcRTMax.obj : error LNK2019: unresolved external symbol "public: int __thiscall PartConvMax::cleanup(void)" (?cleanup@PartConvMax@@QAEHXZ) referenced in function _main
+pcRTMax.obj : error LNK2019: unresolved external symbol "public: int __thiscall PartConvMax::run(float * * const,float * * const)" (?run@PartConvMax@@QAEHQAPAM0@Z) referenced in function "int __cdecl Callback(void const *,void *,unsigned long,struct PaStreamCallbackTimeInfo const *,unsigned long,void *)" (?Callback@@YAHPBXPAXKPBUPaStreamCallbackTimeInfo@@K1@Z)
+pcRTMax.obj : error LNK2019: unresolved external symbol "int __cdecl readImpulseResponse(class VectorTemplate<float> &,char const *,int)" (?readImpulseResponse@@YAHAAV?$VectorTemplate@M@@PBDH@Z) referenced in function _main
+pcRTMax.obj : error LNK2019: unresolved external symbol "public: int __thiscall VectorTemplate<float>::create(int)" (?create@?$VectorTemplate@M@@QAEHH@Z) referenced in function _main
+pcRTMax.obj : error LNK2019: unresolved external symbol "public: void __thiscall VectorTemplate<float>::destroy(void)" (?destroy@?$VectorTemplate@M@@QAEXXZ) referenced in function "public: __thiscall VectorTemplate<float>::~VectorTemplate<float>(void)" (??1?$VectorTemplate@M@@QAE@XZ)
+C:\Users\TILL\Repos\partconv\Release\Partial Convolution Port.exe : fatal error LNK1120: 15 unresolved externals

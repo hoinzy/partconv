@@ -672,7 +672,6 @@ void PartConvMax::reset()
         pc[i].reset();
 }
 
-
 void *PartConvMax::workerThreadEntry(void *arg)
 {
     WorkerThreadData *workerThreadData = (WorkerThreadData*)arg;

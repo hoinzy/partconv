@@ -2,9 +2,10 @@
 #include<stdlib.h>
 #include<assert.h>
 #include<errno.h>
+#include<vector>
 
 #include "portaudio.h"
-#include "pa_mac_core.h"
+#include "pa_asio.h"
 
 #include "partconv.h"
 #include "sndtools.h"
@@ -12,6 +13,8 @@
 #define IMPULSE_NAME "../reverbs/hamilton_mausoleum.wav"
 #define PARTITIONING {64,256,1024,4096,16384,65536}
 #define LEVELS 6
+
+#define OUTPUT_DEVICE (Pa_GetHostApiInfo(Pa_HostApiTypeIdToHostApiIndex( paASIO))->defaultOutputDevice)
 
 #define min(X, Y)  ((X) < (Y) ? (X) : (Y))
 
@@ -128,11 +131,15 @@ PaStream *setupAudioStream(PartConvMax *pc)
 {
     PaStream *stream;
     PaStreamParameters outputParameters,inputParameters;
+    PaAsioStreamInfo asioOutputInfo;
 
     Pa_Initialize();
 
-    //outputParameters.device = Pa_GetDefaultOutputDevice();
-    outputParameters.device = 6; //Aggregate Device
+
+    outputParameters.device = 1;
+	//outputParameters.device = Pa_GetDefaultOutputDevice();
+    //outputParameters.device = 6; //Aggregate Device
+
 
     if(outputParameters.device == paNoDevice)
     {
@@ -148,8 +155,9 @@ PaStream *setupAudioStream(PartConvMax *pc)
     outputParameters.suggestedLatency = ((float)(pc->buffer_size) / 44100.0f);
 
 
+    inputParameters.device = 1;
     //inputParameters.device = Pa_GetDefaultInputDevice();
-    inputParameters.device = 6; //Aggregate Device
+    //inputParameters.device = 6; //Aggregate Device
     if(inputParameters.device == paNoDevice)
     {
         printf("\nno input device available\n");
@@ -162,10 +170,11 @@ PaStream *setupAudioStream(PartConvMax *pc)
     inputParameters.suggestedLatency = Pa_GetDeviceInfo( inputParameters.device )->defaultLowInputLatency;
     //inputParameters.suggestedLatency = (64.0f / 44100.0f);
     inputParameters.suggestedLatency = ((float)(pc->buffer_size) / 44100.0f);
+    inputParameters.hostApiSpecificStreamInfo = &asioOutputInfo;
 
     PaStreamFlags streamFlags;
 
-    PaMacCoreStreamInfo coreInfo;
+    //PaMacCoreStreamInfo coreInfo;
 
     /*This setting is tuned for pro audio apps. It allows SR conversion on input
       and output, but it tries to set the appropriate SR on the device.*/
@@ -173,13 +182,25 @@ PaStream *setupAudioStream(PartConvMax *pc)
     
     /*This is a setting to minimize CPU usage, even if that means interrupting the device. */
     //#define paMacCoreMinimizeCPU                 (0x0101)
-    unsigned long flags = (0x0101);
-    PaMacCore_SetupStreamInfo(&coreInfo, flags);
-    inputParameters.hostApiSpecificStreamInfo = &coreInfo;
-    outputParameters.hostApiSpecificStreamInfo = &coreInfo;
+    //unsigned long flags = (0x0101);
+    //PaMacCore_SetupStreamInfo(&coreInfo, flags);
+    //inputParameters.hostApiSpecificStreamInfo = &coreInfo;
+    //outputParameters.hostApiSpecificStreamInfo = &coreInfo;
 
     streamFlags = paNoFlag;
 
+    int outputChannelSelectors[1];
+
+
+    asioOutputInfo.size = sizeof(PaAsioStreamInfo);
+    asioOutputInfo.hostApiType = paASIO;
+    asioOutputInfo.version = 1;
+    asioOutputInfo.flags = paAsioUseChannelSelectors;
+    outputChannelSelectors[0] = 1;
+    asioOutputInfo.channelSelectors = outputChannelSelectors;
+    outputParameters.hostApiSpecificStreamInfo = &asioOutputInfo;
+
+    //assert(Pa_GetHostApiInfo(Pa_GetDeviceInfo(Pa_GetDefaultOutputDevice())->hostApi)->type == paASIO);
 
     PaError error = Pa_OpenStream(
             &stream,

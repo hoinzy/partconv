@@ -1,15 +1,16 @@
-#include<stdio.h>
-#include<stdlib.h>
+#include<cstdio>
+#include<cstdlib>
 #include<assert.h>
 #include<errno.h>
 
 #include "portaudio.h"
-#include "pa_mac_core.h"
+#include "pa_asio.h"
+#include "sndtools.h"
 
 #include "partconvMulti.h"
 
-// #define WAVIO //read one input channel from wav file
-//#define OUTPUT_NAME "./output.wav"
+//#define WAVIO //read one input channel from wav file
+//#define OUTPUT_NAME "audio/output.wav"
 #define OUTPUT_NAME NULL
 #define INPUT_NAME "../audio/input.wav"
 
@@ -275,9 +276,9 @@ PaStream *setupAudioStream(PartConvMulti *pc)
 
     const PaStreamInfo* stream_info = Pa_GetStreamInfo(stream);
 
-#ifndef __APPLE__
-    PaAlsa_EnableRealtimeScheduling(stream, true);
-#endif
+//#ifndef __APPLE__
+//    PaAlsa_EnableRealtimeScheduling(stream, true);
+//#endif
 
     printf("\nOutput Stream:\n");
     printf("sample rate: %g \n",stream_info->sampleRate);

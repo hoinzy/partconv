@@ -1,4 +1,5 @@
 #include "sndtools.h"
+#include "math.h"
 
 int readImpulseResponse(Vector & v, const char* filename, int verbosity)
 { 

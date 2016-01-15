@@ -2,7 +2,8 @@
 #define __buffers__
 
 #include "fftw3.h"
-
+#include<cstring>
+#include<cstdio>
 
 
 
